@@ -1,11 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, TextInput, Button } from 'react-native';
+import Counter from "./components/Counter";
+import Profile from "./components/Profile";
+import { useState } from "react";
 
 export default function App() {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [displayCount, setDisplayCount] = useState(0);
+
+  const handleIncrement = () => {
+    setCount(count + 1);
+  };
+
+  const handleDecrement = () => {
+    setCount(count - 1);
+  };
+
+  const handlePassValue = () => {
+    setDisplayName(name);
+    setDisplayCount(count);
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Profile name={displayName} age={displayCount} />
+      <TextInput
+        style={styles.input}
+        placeholder="Input Nama"
+        onChangeText={setName}
+        value={name}
+      />
+      <Counter
+        value={count}
+        handleDecrement={handleDecrement}
+        handleIncrement={handleIncrement}
+        handlePassValue={handlePassValue}
+      />
     </View>
   );
 }
@@ -15,6 +46,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 20,
+    marginTop: 20,
+    paddingHorizontal: 10
+  }
 });
